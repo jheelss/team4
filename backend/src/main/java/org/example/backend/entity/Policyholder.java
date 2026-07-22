@@ -2,8 +2,6 @@ package org.example.backend.entity;
 
 import jakarta.persistence.*;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Table(name = "POLICYHOLDERS", uniqueConstraints = @UniqueConstraint(name = "UK_POLICYHOLDERS_USER", columnNames = "USER_ID"))
@@ -14,9 +12,8 @@ public class Policyholder {
     @Column(name = "POLICYHOLDER_ID")
     private Long policyholderId;
 
-    @OneToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "USER_ID", nullable = false, unique = true, foreignKey = @ForeignKey(name = "FK_POLICYHOLDERS_USER"))
-    private User user;
+    @Column(name = "USER_ID", nullable = false, unique = true)
+    private Long userId;
 
     @Column(name = "FIRST_NAME", nullable = false, length = 100)
     private String firstName;
@@ -42,23 +39,11 @@ public class Policyholder {
     @Column(name = "KYC_STATUS", length = 30)
     private String kycStatus;
 
-    @OneToMany(mappedBy = "policyholder", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Nominee> nominees = new ArrayList<>();
-
-    @OneToMany(mappedBy = "policyholder", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<KycDocument> kycDocuments = new ArrayList<>();
-
-    @OneToMany(mappedBy = "policyholder", fetch = FetchType.LAZY)
-    private List<Policy> policies = new ArrayList<>();
-
-    @OneToMany(mappedBy = "policyholder", fetch = FetchType.LAZY)
-    private List<PolicyStatement> policyStatements = new ArrayList<>();
-
     public Policyholder() {}
     public Long getPolicyholderId() { return policyholderId; }
     public void setPolicyholderId(Long policyholderId) { this.policyholderId = policyholderId; }
-    public User getUser() { return user; }
-    public void setUser(User user) { this.user = user; }
+    public Long getUserId() { return userId; }
+    public void setUserId(Long userId) { this.userId = userId; }
     public String getFirstName() { return firstName; }
     public void setFirstName(String firstName) { this.firstName = firstName; }
     public String getLastName() { return lastName; }
@@ -75,12 +60,4 @@ public class Policyholder {
     public void setAddress(String address) { this.address = address; }
     public String getKycStatus() { return kycStatus; }
     public void setKycStatus(String kycStatus) { this.kycStatus = kycStatus; }
-    public List<Nominee> getNominees() { return nominees; }
-    public void setNominees(List<Nominee> nominees) { this.nominees = nominees; }
-    public List<KycDocument> getKycDocuments() { return kycDocuments; }
-    public void setKycDocuments(List<KycDocument> kycDocuments) { this.kycDocuments = kycDocuments; }
-    public List<Policy> getPolicies() { return policies; }
-    public void setPolicies(List<Policy> policies) { this.policies = policies; }
-    public List<PolicyStatement> getPolicyStatements() { return policyStatements; }
-    public void setPolicyStatements(List<PolicyStatement> policyStatements) { this.policyStatements = policyStatements; }
 }

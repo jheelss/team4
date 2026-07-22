@@ -10,9 +10,9 @@ import java.util.List;
 public interface PolicyStatementRepository extends CrudRepository<PolicyStatement, Long> {
 
     // Find all statements for a policyholder
-    List<PolicyStatement> findByPolicyholder_PolicyholderId(Long policyholderId);
+    List<PolicyStatement> findByPolicyholderId(Long policyholderId);
 
     // Find all statements for a policy
-    List<PolicyStatement> findByPolicy_PolicyId(Long policyId);
+    List<PolicyStatement> findByPolicyId(Long policyId);
 
 }

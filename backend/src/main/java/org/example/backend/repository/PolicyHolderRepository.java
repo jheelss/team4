@@ -9,6 +9,6 @@ import java.util.Optional;
 @Repository
 public interface PolicyHolderRepository extends CrudRepository<Policyholder, Long> {
 
-    Optional<Policyholder> findByUser_UserId(Long userId);
+    Optional<Policyholder> findByUserId(Long userId);
 
 }

@@ -12,9 +12,8 @@ public class KycDocument {
     @Column(name = "DOCUMENT_ID")
     private Long documentId;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "POLICYHOLDER_ID", nullable = false, foreignKey = @ForeignKey(name = "FK_KYC_POLICYHOLDER"))
-    private Policyholder policyholder;
+    @Column(name = "POLICYHOLDER_ID", nullable = false)
+    private Long policyholderId;
 
     @Column(name = "DOCUMENT_TYPE", nullable = false, length = 50)
     private String documentType;
@@ -31,8 +30,8 @@ public class KycDocument {
     public KycDocument() {}
     public Long getDocumentId() { return documentId; }
     public void setDocumentId(Long documentId) { this.documentId = documentId; }
-    public Policyholder getPolicyholder() { return policyholder; }
-    public void setPolicyholder(Policyholder policyholder) { this.policyholder = policyholder; }
+    public Long getPolicyholderId() { return policyholderId; }
+    public void setPolicyholderId(Long policyholderId) { this.policyholderId = policyholderId; }
     public String getDocumentType() { return documentType; }
     public void setDocumentType(String documentType) { this.documentType = documentType; }
     public String getDocumentNumber() { return documentNumber; }

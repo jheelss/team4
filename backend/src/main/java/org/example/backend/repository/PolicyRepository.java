@@ -14,9 +14,9 @@ public interface PolicyRepository extends CrudRepository<Policy, Long> {
     Optional<Policy> findByPolicyNumber(String policyNumber);
 
     // Find all policies under a product
-    List<Policy> findByProduct_ProductId(Long productId);
+    List<Policy> findByProductId(Long productId);
 
     // Find all policies owned by a policyholder
-    List<Policy> findByPolicyholder_PolicyholderId(Long policyholderId);
+    List<Policy> findByPolicyholderId(Long policyholderId);
 
 }

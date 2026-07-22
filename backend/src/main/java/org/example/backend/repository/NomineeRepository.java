@@ -12,5 +12,5 @@ public interface NomineeRepository extends CrudRepository<Nominee, Long> {
 
     Optional<Nominee> findByNomineeId(Long nomineeId);
 
-    List<Nominee> findAllByPolicyholder_PolicyholderId(Long policyholderId);
+    List<Nominee> findAllByPolicyholderId(Long policyholderId);
 }

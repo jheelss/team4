@@ -10,7 +10,7 @@ import java.util.List;
 public interface ClaimRepository extends CrudRepository<Claim, Long> {
 
     // Find all claims for a specific policy
-    List<Claim> findByPolicy_PolicyId(Long policyId);
+    List<Claim> findByPolicyId(Long policyId);
 
     // Optional: Find claims by status
     List<Claim> findByClaimStatus(String claimStatus);

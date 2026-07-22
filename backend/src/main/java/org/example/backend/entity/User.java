@@ -30,18 +30,14 @@ public class User {
     @Column(name = "PHONE", length = 20)
     private String phone;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "ROLE_ID", nullable = false, foreignKey = @ForeignKey(name = "FK_USERS_ROLE"))
-    private Role role;
+    @Column(name = "ROLE_ID", nullable = false)
+    private Long roleId;
 
     @Column(name = "STATUS", nullable = false, length = 30)
     private String status;
 
     @Column(name = "CREATED_AT", nullable = false)
     private LocalDateTime createdAt;
-
-    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
-    private Policyholder policyholder;
 
     public User() {}
 
@@ -62,12 +58,10 @@ public class User {
     public void setEmail(String email) { this.email = email; }
     public String getPhone() { return phone; }
     public void setPhone(String phone) { this.phone = phone; }
-    public Role getRole() { return role; }
-    public void setRole(Role role) { this.role = role; }
+    public Long getRoleId() { return roleId; }
+    public void setRoleId(Long roleId) { this.roleId = roleId; }
     public String getStatus() { return status; }
     public void setStatus(String status) { this.status = status; }
     public LocalDateTime getCreatedAt() { return createdAt; }
     public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
-    public Policyholder getPolicyholder() { return policyholder; }
-    public void setPolicyholder(Policyholder policyholder) { this.policyholder = policyholder; }
 }

@@ -13,9 +13,8 @@ public class PremiumPayment {
     @Column(name = "PAYMENT_ID")
     private Long paymentId;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "POLICY_ID", nullable = false, foreignKey = @ForeignKey(name = "FK_PAYMENTS_POLICY"))
-    private Policy policy;
+    @Column(name = "POLICY_ID", nullable = false)
+    private Long policyId;
 
     @Column(name = "PAYMENT_DATE", nullable = false)
     private LocalDate paymentDate;
@@ -32,8 +31,8 @@ public class PremiumPayment {
     public PremiumPayment() {}
     public Long getPaymentId() { return paymentId; }
     public void setPaymentId(Long paymentId) { this.paymentId = paymentId; }
-    public Policy getPolicy() { return policy; }
-    public void setPolicy(Policy policy) { this.policy = policy; }
+    public Long getPolicyId() { return policyId; }
+    public void setPolicyId(Long policyId) { this.policyId = policyId; }
     public LocalDate getPaymentDate() { return paymentDate; }
     public void setPaymentDate(LocalDate paymentDate) { this.paymentDate = paymentDate; }
     public BigDecimal getAmount() { return amount; }

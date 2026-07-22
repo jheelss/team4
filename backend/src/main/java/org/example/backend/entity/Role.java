@@ -1,8 +1,6 @@
 package org.example.backend.entity;
 
 import jakarta.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Table(name = "ROLES", uniqueConstraints = @UniqueConstraint(name = "UK_ROLES_ROLE_NAME", columnNames = "ROLE_NAME"))
@@ -19,9 +17,6 @@ public class Role {
     @Column(name = "DESCRIPTION", length = 255)
     private String description;
 
-    @OneToMany(mappedBy = "role", fetch = FetchType.LAZY)
-    private List<User> users = new ArrayList<>();
-
     public Role() {}
     public Long getRoleId() { return roleId; }
     public void setRoleId(Long roleId) { this.roleId = roleId; }
@@ -29,6 +24,4 @@ public class Role {
     public void setRoleName(String roleName) { this.roleName = roleName; }
     public String getDescription() { return description; }
     public void setDescription(String description) { this.description = description; }
-    public List<User> getUsers() { return users; }
-    public void setUsers(List<User> users) { this.users = users; }
 }

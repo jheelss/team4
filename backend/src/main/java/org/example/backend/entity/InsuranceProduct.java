@@ -2,8 +2,6 @@ package org.example.backend.entity;
 
 import jakarta.persistence.*;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Table(name = "INSURANCE_PRODUCTS")
@@ -35,9 +33,6 @@ public class InsuranceProduct {
     @Column(name = "STATUS", nullable = false, length = 30)
     private String status;
 
-    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
-    private List<Policy> policies = new ArrayList<>();
-
     public InsuranceProduct() {}
     public Long getProductId() { return productId; }
     public void setProductId(Long productId) { this.productId = productId; }
@@ -55,6 +50,4 @@ public class InsuranceProduct {
     public void setDescription(String description) { this.description = description; }
     public String getStatus() { return status; }
     public void setStatus(String status) { this.status = status; }
-    public List<Policy> getPolicies() { return policies; }
-    public void setPolicies(List<Policy> policies) { this.policies = policies; }
 }

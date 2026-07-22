@@ -13,9 +13,8 @@ public class Claim {
     @Column(name = "CLAIM_ID")
     private Long claimId;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "POLICY_ID", nullable = false, foreignKey = @ForeignKey(name = "FK_CLAIMS_POLICY"))
-    private Policy policy;
+    @Column(name = "POLICY_ID", nullable = false)
+    private Long policyId;
 
     @Column(name = "CLAIM_DATE", nullable = false)
     private LocalDate claimDate;
@@ -41,8 +40,8 @@ public class Claim {
     public Claim() {}
     public Long getClaimId() { return claimId; }
     public void setClaimId(Long claimId) { this.claimId = claimId; }
-    public Policy getPolicy() { return policy; }
-    public void setPolicy(Policy policy) { this.policy = policy; }
+    public Long getPolicyId() { return policyId; }
+    public void setPolicyId(Long policyId) { this.policyId = policyId; }
     public LocalDate getClaimDate() { return claimDate; }
     public void setClaimDate(LocalDate claimDate) { this.claimDate = claimDate; }
     public BigDecimal getClaimAmount() { return claimAmount; }

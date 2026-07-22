@@ -10,6 +10,6 @@ import java.util.List;
 public interface PremiumPaymentRepository extends CrudRepository<PremiumPayment, Long> {
 
     // Find all payments for a policy
-    List<PremiumPayment> findByPolicy_PolicyId(Long policyId);
+    List<PremiumPayment> findByPolicyId(Long policyId);
 
 }

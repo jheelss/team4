@@ -12,9 +12,8 @@ public class Nominee {
     @Column(name = "NOMINEE_ID")
     private Long nomineeId;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "POLICYHOLDER_ID", nullable = false, foreignKey = @ForeignKey(name = "FK_NOMINEES_POLICYHOLDER"))
-    private Policyholder policyholder;
+    @Column(name = "POLICYHOLDER_ID", nullable = false)
+    private Long policyholderId;
 
     @Column(name = "NOMINEE_NAME", nullable = false, length = 150)
     private String nomineeName;
@@ -31,8 +30,8 @@ public class Nominee {
     public Nominee() {}
     public Long getNomineeId() { return nomineeId; }
     public void setNomineeId(Long nomineeId) { this.nomineeId = nomineeId; }
-    public Policyholder getPolicyholder() { return policyholder; }
-    public void setPolicyholder(Policyholder policyholder) { this.policyholder = policyholder; }
+    public Long getPolicyholderId() { return policyholderId; }
+    public void setPolicyholderId(Long policyholderId) { this.policyholderId = policyholderId; }
     public String getNomineeName() { return nomineeName; }
     public void setNomineeName(String nomineeName) { this.nomineeName = nomineeName; }
     public String getRelationship() { return relationship; }

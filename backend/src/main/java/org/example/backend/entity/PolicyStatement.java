@@ -13,13 +13,11 @@ public class PolicyStatement {
     @Column(name = "STATEMENT_ID")
     private Long statementId;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "POLICYHOLDER_ID", nullable = false, foreignKey = @ForeignKey(name = "FK_STATEMENTS_POLICYHOLDER"))
-    private Policyholder policyholder;
+    @Column(name = "POLICYHOLDER_ID", nullable = false)
+    private Long policyholderId;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "POLICY_ID", nullable = false, foreignKey = @ForeignKey(name = "FK_STATEMENTS_POLICY"))
-    private Policy policy;
+    @Column(name = "POLICY_ID", nullable = false)
+    private Long policyId;
 
     @Column(name = "STATEMENT_DATE", nullable = false)
     private LocalDate statementDate;
@@ -45,10 +43,10 @@ public class PolicyStatement {
     public PolicyStatement() {}
     public Long getStatementId() { return statementId; }
     public void setStatementId(Long statementId) { this.statementId = statementId; }
-    public Policyholder getPolicyholder() { return policyholder; }
-    public void setPolicyholder(Policyholder policyholder) { this.policyholder = policyholder; }
-    public Policy getPolicy() { return policy; }
-    public void setPolicy(Policy policy) { this.policy = policy; }
+    public Long getPolicyholderId() { return policyholderId; }
+    public void setPolicyholderId(Long policyholderId) { this.policyholderId = policyholderId; }
+    public Long getPolicyId() { return policyId; }
+    public void setPolicyId(Long policyId) { this.policyId = policyId; }
     public LocalDate getStatementDate() { return statementDate; }
     public void setStatementDate(LocalDate statementDate) { this.statementDate = statementDate; }
     public String getStatementPeriod() { return statementPeriod; }
