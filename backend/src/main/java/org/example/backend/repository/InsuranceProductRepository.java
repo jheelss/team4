@@ -1,4 +1,4 @@
-package org.example.backend.repositories;
+package org.example.backend.repository;
 
 import org.example.backend.entity.InsuranceProduct;
 import org.springframework.data.repository.CrudRepository;
@@ -12,9 +12,6 @@ public interface InsuranceProductRepository extends CrudRepository<InsuranceProd
 
     Optional<InsuranceProduct> findByProductId(Long productId);
 
-    List<InsuranceProduct> findAllByCompanyId(Long companyId);
-
     List<InsuranceProduct> findAllByProductType(String productType);
 
-    boolean existsByProductIdAndCompanyId(Long productId, Long companyId);
 }

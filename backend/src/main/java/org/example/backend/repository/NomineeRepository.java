@@ -1,4 +1,4 @@
-package org.example.backend.repositories;
+package org.example.backend.repository;
 
 import org.example.backend.entity.Nominee;
 import org.springframework.data.repository.CrudRepository;
@@ -12,5 +12,5 @@ public interface NomineeRepository extends CrudRepository<Nominee, Long> {
 
     Optional<Nominee> findByNomineeId(Long nomineeId);
 
-    List<Nominee> findAllByPolicyholderId(Long policyholderId);
+    List<Nominee> findAllByPolicyholder_PolicyholderId(Long policyholderId);
 }

@@ -1,4 +1,4 @@
-package org.example.backend.repositories;
+package org.example.backend.repository;
 
 import org.example.backend.entity.User;
 import org.springframework.data.repository.CrudRepository;
