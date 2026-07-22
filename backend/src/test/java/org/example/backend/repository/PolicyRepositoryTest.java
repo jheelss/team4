@@ -8,6 +8,7 @@ import org.example.backend.entity.User;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -15,7 +16,8 @@ import java.time.LocalDate;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-@DataJpaTest(properties = "spring.jpa.database-platform=org.hibernate.dialect.H2Dialect")
+@DataJpaTest(properties = "spring.jpa.hibernate.ddl-auto=create-drop")
+@ActiveProfiles("test")
 class PolicyRepositoryTest {
 
     @Autowired

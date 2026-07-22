@@ -87,7 +87,7 @@ class UserRepositoryTest {
     }
 
     @Test
-    void persistsRoleIdLink() {
+    void persistsRoleId() {
         Role role = saveRole("ADMIN");
         User savedUser = userRepository.save(
                 newUser("linked.user", "linked.user@example.com", role)
@@ -97,9 +97,7 @@ class UserRepositoryTest {
 
         User result = userRepository.findById(savedUser.getUserId()).orElseThrow();
 
-        assertNotNull(result.getRole());
-        assertEquals(role.getRoleId(), result.getRole().getRoleId());
-        assertEquals("ADMIN", result.getRole().getRoleName());
+        assertEquals(role.getRoleId(), result.getRoleId());
     }
 
     private Role saveRole(String roleName) {
@@ -116,7 +114,7 @@ class UserRepositoryTest {
         user.setFullName("Repository Test User");
         user.setEmail(email);
         user.setPhone("9999999999");
-        user.setRole(role);
+        user.setRoleId(role.getRoleId());
         user.setStatus("ACTIVE");
         return user;
     }

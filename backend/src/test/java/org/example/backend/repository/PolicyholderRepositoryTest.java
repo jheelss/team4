@@ -21,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class PolicyholderRepositoryTest {
 
     @Autowired
-    private PolicyholderRepository policyholderRepository;
+    private PolicyHolderRepository policyholderRepository;
 
     @Autowired
     private UserRepository userRepository;
@@ -67,14 +67,14 @@ class PolicyholderRepositoryTest {
         entityManager.flush();
         entityManager.clear();
 
-        Optional<Policyholder> result = policyholderRepository.findByUser_UserId(user.getUserId());
+        Optional<Policyholder> result = policyholderRepository.findByUserId(user.getUserId());
 
         assertTrue(result.isPresent());
         assertEquals(savedPolicyholder.getPolicyholderId(), result.get().getPolicyholderId());
     }
 
     @Test
-    void persistsUserLink() {
+    void persistsUserIdLink() {
         User user = saveUser("holder.link", "holder.link@example.com");
         Policyholder savedPolicyholder = policyholderRepository.save(newPolicyholder(user));
         entityManager.flush();
@@ -84,9 +84,7 @@ class PolicyholderRepositoryTest {
                 savedPolicyholder.getPolicyholderId()
         ).orElseThrow();
 
-        assertNotNull(result.getUser());
-        assertEquals(user.getUserId(), result.getUser().getUserId());
-        assertEquals("holder.link", result.getUser().getUsername());
+        assertEquals(user.getUserId(), result.getUserId());
     }
 
     private User saveUser(String username, String email) {
@@ -101,14 +99,14 @@ class PolicyholderRepositoryTest {
         user.setFullName("Asha Fernandes");
         user.setEmail(email);
         user.setPhone("9999999999");
-        user.setRole(role);
+        user.setRoleId(role.getRoleId());
         user.setStatus("ACTIVE");
         return userRepository.save(user);
     }
 
     private Policyholder newPolicyholder(User user) {
         Policyholder policyholder = new Policyholder();
-        policyholder.setUser(user);
+        policyholder.setUserId(user.getUserId());
         policyholder.setFirstName("Asha");
         policyholder.setLastName("Fernandes");
         policyholder.setDob(LocalDate.of(1990, 1, 15));

@@ -4,12 +4,14 @@ import org.example.backend.entity.InsuranceProduct;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@DataJpaTest(properties = "spring.jpa.database-platform=org.hibernate.dialect.H2Dialect")
+@DataJpaTest(properties = "spring.jpa.hibernate.ddl-auto=create-drop")
+@ActiveProfiles("test")
 class InsuranceProductRepositoryTest {
 
     @Autowired

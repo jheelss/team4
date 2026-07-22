@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface PolicyholderRepository extends CrudRepository<Policyholder, Long> {
+public interface PolicyHolderRepository extends CrudRepository<Policyholder, Long> {
 
     Optional<Policyholder> findByUserId(Long userId);
 }
