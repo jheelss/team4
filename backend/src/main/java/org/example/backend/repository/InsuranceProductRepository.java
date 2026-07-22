@@ -8,10 +8,10 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface InsuranceProductRepository extends CrudRepository<InsuranceProduct, Long> {
+public interface InsuranceProductRepository
+        extends CrudRepository<InsuranceProduct, Long> {
 
     Optional<InsuranceProduct> findByProductId(Long productId);
 
     List<InsuranceProduct> findAllByProductType(String productType);
-
 }

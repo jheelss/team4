@@ -8,7 +8,8 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface KycDocumentRepository extends CrudRepository<KycDocument, Long> {
+public interface KycDocumentRepository
+        extends CrudRepository<KycDocument, Long> {
 
     Optional<KycDocument> findByDocumentId(Long documentId);
 
