@@ -1,4 +1,4 @@
-package org.example.backend.repositories;
+package org.example.backend.repository;
 
 import org.example.backend.entity.Policyholder;
 import org.springframework.data.repository.CrudRepository;

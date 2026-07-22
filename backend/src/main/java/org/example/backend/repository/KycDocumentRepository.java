@@ -1,4 +1,4 @@
-package org.example.backend.repositories;
+package org.example.backend.repository;
 
 import org.example.backend.entity.KycDocument;
 import org.springframework.data.repository.CrudRepository;
@@ -8,9 +8,12 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface KycDocumentRepository extends CrudRepository<KycDocument, Long> {
+public interface KycDocumentRepository
+        extends CrudRepository<KycDocument, Long> {
 
     Optional<KycDocument> findByDocumentId(Long documentId);
 
-    List<KycDocument> findAllByPolicyholder_PolicyholderId(Long policyholderId);
+    List<KycDocument> findAllByPolicyholder_PolicyholderId(
+            Long policyholderId
+    );
 }
