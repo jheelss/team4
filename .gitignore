@@ -1,0 +1,52 @@
+# Maven and Java build output
+**/target/
+**/build/
+**/out/
+*.class
+
+# IDE and editor state
+.idea/
+.junie/
+.vscode/
+**/.settings/
+**/.classpath
+**/.project
+**/.factorypath
+**/.apt_generated/
+**/.springBeans
+**/.sts4-cache/
+*.iml
+*.iws
+*.ipr
+*.swp
+*~
+
+# Local configuration and secrets
+.env
+.env.*
+!.env.example
+**/application-local.properties
+**/application-*.local.properties
+**/application-local.yml
+**/application-local.yaml
+secrets/
+*.pem
+*.key
+*.p12
+*.pfx
+
+# Logs, crash dumps, and temporary files
+*.log
+logs/
+*.tmp
+hs_err_pid*
+replay_pid*
+
+# Test and coverage output
+coverage/
+*.exec
+
+# Operating-system metadata
+.DS_Store
+Thumbs.db
+Desktop.ini

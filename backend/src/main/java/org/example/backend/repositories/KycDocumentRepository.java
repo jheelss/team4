@@ -12,5 +12,5 @@ public interface KycDocumentRepository extends CrudRepository<KycDocument, Long>
 
     Optional<KycDocument> findByDocumentId(Long documentId);
 
-    List<KycDocument> findAllByPolicyholderId(Long policyholderId);
+    List<KycDocument> findAllByPolicyholder_PolicyholderId(Long policyholderId);
 }
