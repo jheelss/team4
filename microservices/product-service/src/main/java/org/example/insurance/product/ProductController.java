@@ -14,7 +14,8 @@ public class ProductController {
     }
 
     @PostMapping
-    public ResponseEntity<InsuranceProduct> create(@RequestBody InsuranceProduct p) {
+    public ResponseEntity<?> create(@RequestBody InsuranceProduct p) {
+        if (!valid(p)) return ResponseEntity.badRequest().body(Map.of("error", "Product name/type, positive coverage/premium amounts, a positive term, and status ACTIVE or INACTIVE are required"));
         return ResponseEntity.status(201).body(products.save(p));
     }
 
@@ -29,9 +30,19 @@ public class ProductController {
     }
 
     @PutMapping("/{id}/status")
-    public InsuranceProduct status(@PathVariable Long id, @RequestParam String value) {
+    public ResponseEntity<?> status(@PathVariable Long id, @RequestParam String value) {
+        if (!Set.of("ACTIVE", "INACTIVE").contains(value)) return ResponseEntity.badRequest().body(Map.of("error", "Status must be ACTIVE or INACTIVE"));
         InsuranceProduct p = get(id);
         p.setStatus(value);
-        return products.save(p);
+        return ResponseEntity.ok(products.save(p));
+    }
+
+    private boolean valid(InsuranceProduct p) {
+        return p != null && p.getProductName() != null && !p.getProductName().isBlank()
+                && p.getProductType() != null && !p.getProductType().isBlank()
+                && p.getCoverageAmount() != null && p.getCoverageAmount().signum() > 0
+                && p.getPremiumAmount() != null && p.getPremiumAmount().signum() > 0
+                && p.getPolicyTerm() != null && p.getPolicyTerm() > 0
+                && Set.of("ACTIVE", "INACTIVE").contains(p.getStatus());
     }
 }
