@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.*;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestClient;
@@ -14,12 +15,17 @@ public class StatementController {
     private final StatementRepository statements;
     private final RestClient policies, premiums, claims;
 
-    StatementController(StatementRepository s, @Value("${clients.policy-url}") String p,
-            @Value("${clients.premium-url}") String pr, @Value("${clients.claims-url}") String c) {
+    StatementController(
+            StatementRepository s,
+            @LoadBalanced RestClient.Builder restClientBuilder,
+            @Value("${clients.policy-url}") String p,
+            @Value("${clients.premium-url}") String pr,
+            @Value("${clients.claims-url}") String c
+    ) {
         statements = s;
-        policies = RestClient.create(p);
-        premiums = RestClient.create(pr);
-        claims = RestClient.create(c);
+        policies = restClientBuilder.clone().baseUrl(p).build();
+        premiums = restClientBuilder.clone().baseUrl(pr).build();
+        claims = restClientBuilder.clone().baseUrl(c).build();
     }
 
     @PostMapping("/policy/{id}")
