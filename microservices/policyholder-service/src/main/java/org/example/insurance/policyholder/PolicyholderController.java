@@ -2,6 +2,7 @@ package org.example.insurance.policyholder;
 
 import java.util.*;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestClient;
@@ -15,9 +16,10 @@ public class PolicyholderController {
     private final RestClient identity;
 
     PolicyholderController(PolicyholderRepository holders, NomineeRepository nominees, KycDocumentRepository documents,
+            @LoadBalanced RestClient.Builder restClientBuilder,
             @Value("${clients.identity-url}") String identityUrl) {
         this.holders = holders; this.nominees = nominees; this.documents = documents;
-        this.identity = RestClient.create(identityUrl);
+        this.identity = restClientBuilder.clone().baseUrl(identityUrl).build();
     }
 
     @PostMapping

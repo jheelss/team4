@@ -3,6 +3,7 @@ package org.example.insurance.claims;
 import java.time.LocalDate;
 import java.util.*;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestClient;
@@ -13,9 +14,13 @@ public class ClaimsController {
     private final ClaimRepository claims;
     private final RestClient policies;
 
-    ClaimsController(ClaimRepository claims, @Value("${clients.policy-url}") String url) {
+    ClaimsController(
+            ClaimRepository claims,
+            @LoadBalanced RestClient.Builder restClientBuilder,
+            @Value("${clients.policy-url}") String url
+    ) {
         this.claims = claims;
-        policies = RestClient.create(url);
+        policies = restClientBuilder.clone().baseUrl(url).build();
     }
 
     @PostMapping
