@@ -29,13 +29,18 @@ public class JwtGatewayFilter extends OncePerRequestFilter {
         chain.doFilter(request, response);
     }
 
-    private boolean isPublic(String method, String path) { return path.startsWith("/swagger-ui") || path.startsWith("/v3/api-docs") || path.startsWith("/actuator/health") || ("POST".equals(method) && ("/api/identity/users".equals(path) || "/api/identity/users/login".equals(path))); }
+    private boolean isPublic(String method, String path) {
+        return path.startsWith("/swagger-ui")
+                || path.startsWith("/v3/api-docs")
+                || path.startsWith("/actuator/health")
+                || ("POST".equals(method) && ("/users".equals(path) || "/users/login".equals(path)));
+    }
     private boolean authorized(String method, String path, String role) {
         if (HttpMethod.POST.matches(method) || HttpMethod.PUT.matches(method) || HttpMethod.DELETE.matches(method)) {
-            if (path.startsWith("/api/products")) return is(role, "ADMIN");
-            if (path.startsWith("/api/policies")) return is(role, "ADMIN", "UNDERWRITER");
+            if (path.startsWith("/products")) return is(role, "ADMIN");
+            if (path.startsWith("/policies")) return is(role, "ADMIN", "UNDERWRITER");
             if (path.contains("/claims/") && HttpMethod.PUT.matches(method)) return is(role, "ADMIN", "CLAIMS_OFFICER");
-            if (path.startsWith("/api/policyholders") && (path.contains("kyc") || path.contains("nominees"))) return is(role, "ADMIN", "UNDERWRITER");
+            if (path.startsWith("/policyholders") && (path.contains("kyc") || path.contains("nominees"))) return is(role, "ADMIN", "UNDERWRITER");
         }
         return true;
     }
