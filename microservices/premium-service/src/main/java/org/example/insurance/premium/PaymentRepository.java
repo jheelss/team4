@@ -1,1 +1,9 @@
-package org.example.insurance.premium; import java.util.List; import org.springframework.data.jpa.repository.JpaRepository; interface PaymentRepository extends JpaRepository<PremiumPayment,Long>{List<PremiumPayment> findByPolicyId(Long policyId);}
+package org.example.insurance.premium;
+
+import java.util.List;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+interface PaymentRepository extends JpaRepository<PremiumPayment, Long> {
+    List<PremiumPayment> findByPolicyId(Long policyId);
+}

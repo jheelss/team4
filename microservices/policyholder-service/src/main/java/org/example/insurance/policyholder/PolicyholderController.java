@@ -32,6 +32,11 @@ public class PolicyholderController {
         return ResponseEntity.status(201).body(holders.save(holder));
     }
 
+    @GetMapping("/by-user/{userId}")
+    public Policyholder getByUserId(@PathVariable Long userId) {
+        return holders.findByUserId(userId).orElseThrow(() -> new NoSuchElementException("Policyholder not found"));
+    }
+
     @GetMapping("/{id}") public Policyholder get(@PathVariable Long id) { return holders.findById(id).orElseThrow(() -> new NoSuchElementException("Policyholder not found")); }
     @PostMapping("/{id}/nominees") public ResponseEntity<Nominee> addNominee(@PathVariable Long id, @RequestBody Nominee nominee) { get(id); nominee.setPolicyholderId(id); return ResponseEntity.status(201).body(nominees.save(nominee)); }
     @GetMapping("/{id}/nominees") public List<Nominee> nomineeList(@PathVariable Long id) { return nominees.findByPolicyholderId(id); }
@@ -39,6 +44,17 @@ public class PolicyholderController {
     @PostMapping("/{id}/kyc-documents")
     public ResponseEntity<KycDocument> addDocument(@PathVariable Long id, @RequestBody KycDocument document) {
         get(id); document.setPolicyholderId(id); KycDocument saved = documents.save(document); refreshKycStatus(id); return ResponseEntity.status(201).body(saved);
+    }
+
+    @GetMapping("/{id}/kyc-documents")
+    public List<KycDocument> documentList(@PathVariable Long id) {
+        get(id);
+        return documents.findByPolicyholderId(id);
+    }
+
+    @GetMapping("/kyc-documents/pending")
+    public List<KycDocument> pendingDocuments() {
+        return documents.findByVerificationStatusOrderByUploadDateAsc("PENDING");
     }
 
     @PutMapping("/{holderId}/kyc-documents/{documentId}/verification-status")

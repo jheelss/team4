@@ -81,6 +81,11 @@ public class GatewayController {
         return forwardToService("policyholders", request, null, "/policyholders/" + id);
     }
 
+    @GetMapping("/policyholders/by-user/{userId}")
+    ResponseEntity<byte[]> getPolicyholderByUser(HttpServletRequest request, @PathVariable Long userId) {
+        return forwardToService("policyholders", request, null, "/policyholders/by-user/" + userId);
+    }
+
     @PostMapping("/policyholders/{id}/nominees")
     ResponseEntity<byte[]> addNominee(
             HttpServletRequest request,
@@ -102,6 +107,16 @@ public class GatewayController {
             @RequestBody KycDocumentRequest body
     ) {
         return forwardToService("policyholders", request, body, "/policyholders/" + id + "/kyc-documents");
+    }
+
+    @GetMapping("/policyholders/{id}/kyc-documents")
+    ResponseEntity<byte[]> getKycDocuments(HttpServletRequest request, @PathVariable Long id) {
+        return forwardToService("policyholders", request, null, "/policyholders/" + id + "/kyc-documents");
+    }
+
+    @GetMapping("/policyholders/kyc-documents/pending")
+    ResponseEntity<byte[]> getPendingKycDocuments(HttpServletRequest request) {
+        return forwardToService("policyholders", request, null, "/policyholders/kyc-documents/pending");
     }
 
     @PutMapping("/policyholders/{holderId}/kyc-documents/{documentId}/verification-status")
@@ -153,6 +168,21 @@ public class GatewayController {
         return forwardToService("policies", request, null, "/policies/" + id);
     }
 
+    @GetMapping("/policies/policyholder/{policyholderId}")
+    ResponseEntity<byte[]> getPoliciesByPolicyholder(HttpServletRequest request, @PathVariable Long policyholderId) {
+        return forwardToService("policies", request, null, "/policies/policyholder/" + policyholderId);
+    }
+
+    @GetMapping("/policies/pending")
+    ResponseEntity<byte[]> getPendingPolicies(HttpServletRequest request) {
+        return forwardToService("policies", request, null, "/policies/pending");
+    }
+
+    @PutMapping("/policies/{id}/approval")
+    ResponseEntity<byte[]> approvePolicy(HttpServletRequest request, @PathVariable Long id) {
+        return forwardToService("policies", request, null, "/policies/" + id + "/approval");
+    }
+
     @PutMapping("/policies/{id}/renew")
     ResponseEntity<byte[]> renewPolicy(HttpServletRequest request, @PathVariable Long id) {
         return forwardToService("policies", request, null, "/policies/" + id + "/renew");
@@ -181,6 +211,11 @@ public class GatewayController {
     @GetMapping("/claims/policy/{id}")
     ResponseEntity<byte[]> getClaimsByPolicy(HttpServletRequest request, @PathVariable Long id) {
         return forwardToService("claims", request, null, "/claims/policy/" + id);
+    }
+
+    @GetMapping("/claims/pending")
+    ResponseEntity<byte[]> getPendingClaims(HttpServletRequest request) {
+        return forwardToService("claims", request, null, "/claims/pending");
     }
 
     @PutMapping("/claims/{id}/settlement")
