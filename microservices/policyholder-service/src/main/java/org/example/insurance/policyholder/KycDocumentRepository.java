@@ -1,1 +1,9 @@
-package org.example.insurance.policyholder; import java.util.List; import org.springframework.data.jpa.repository.JpaRepository; interface KycDocumentRepository extends JpaRepository<KycDocument,Long>{List<KycDocument> findByPolicyholderId(Long policyholderId);}
+package org.example.insurance.policyholder;
+
+import java.util.List;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+interface KycDocumentRepository extends JpaRepository<KycDocument, Long> {
+    List<KycDocument> findByPolicyholderId(Long policyholderId);
+    List<KycDocument> findByVerificationStatusOrderByUploadDateAsc(String verificationStatus);
+}

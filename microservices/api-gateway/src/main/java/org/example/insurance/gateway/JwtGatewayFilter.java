@@ -36,6 +36,12 @@ public class JwtGatewayFilter extends OncePerRequestFilter {
                 || ("POST".equals(method) && ("/users".equals(path) || "/users/login".equals(path)));
     }
     private boolean authorized(String method, String path, String role) {
+        if (HttpMethod.GET.matches(method) && path.equals("/policyholders/kyc-documents/pending"))
+            return is(role, "ADMIN", "UNDERWRITER");
+        if (HttpMethod.GET.matches(method) && path.equals("/policies/pending"))
+            return is(role, "ADMIN", "UNDERWRITER");
+        if (HttpMethod.GET.matches(method) && path.equals("/claims/pending"))
+            return is(role, "ADMIN", "CLAIMS_OFFICER");
         if (HttpMethod.POST.matches(method) || HttpMethod.PUT.matches(method) || HttpMethod.DELETE.matches(method)) {
             if (path.startsWith("/products")) return is(role, "ADMIN");
             if (path.startsWith("/policies")) return is(role, "ADMIN", "UNDERWRITER");

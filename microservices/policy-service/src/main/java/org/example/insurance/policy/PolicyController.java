@@ -2,6 +2,7 @@ package org.example.insurance.policy;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.UUID;
@@ -70,6 +71,7 @@ public class PolicyController {
         policy.setSumAssured(request.sumAssured());
         policy.setPremiumAmount(new BigDecimal(product.get("premiumAmount").toString()));
         policy.setPolicyNumber("POL-" + UUID.randomUUID().toString().substring(0, 8).toUpperCase());
+        policy.setPolicyStatus("PENDING_APPROVAL");
         return ResponseEntity.status(201).body(policies.save(policy));
     }
 
@@ -77,6 +79,29 @@ public class PolicyController {
     public InsurancePolicy get(@PathVariable Long id) {
         return policies.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("Policy not found"));
+    }
+
+    @GetMapping("/policyholder/{policyholderId}")
+    public List<InsurancePolicy> byPolicyholder(@PathVariable Long policyholderId) {
+        return policies.findByPolicyholderIdOrderByIssueDateDesc(policyholderId);
+    }
+
+    @GetMapping("/pending")
+    public List<InsurancePolicy> pending() {
+        return policies.findByPolicyStatusOrderByIssueDateAsc("PENDING_APPROVAL");
+    }
+
+    @PutMapping("/{id}/approval")
+    public ResponseEntity<InsurancePolicy> approve(@PathVariable Long id, @RequestParam String status) {
+        if (!java.util.Set.of("ACTIVE", "REJECTED").contains(status)) {
+            return ResponseEntity.badRequest().build();
+        }
+        InsurancePolicy policy = get(id);
+        if (!"PENDING_APPROVAL".equals(policy.getPolicyStatus())) {
+            return ResponseEntity.unprocessableEntity().build();
+        }
+        policy.setPolicyStatus(status);
+        return ResponseEntity.ok(policies.save(policy));
     }
 
     @PutMapping("/{id}/renew")

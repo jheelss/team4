@@ -1,0 +1,41 @@
+<div class="portal-page">
+  <oj-bind-if test="[[isCustomer()]]">
+    <div class="page-heading"><div><p class="eyebrow">BECOME A POLICYHOLDER</p><h1>Let’s get you ready for cover</h1><p>Complete these steps once. We’ll remember your details and show when you’re eligible to purchase.</p></div><span data-bind="text:context().eligible?'Eligible to Purchase':(context().kycDocumentId?'Awaiting Verification':'Onboarding'), css:context().eligible?'badge success':'badge warning'"></span></div>
+    <div class="stepper">
+      <div data-bind="css:{active:step()===1,done:step()>1}"><b>1</b><span>Complete Profile</span></div>
+      <div data-bind="css:{active:step()===2,done:step()>2}"><b>2</b><span>Add Nominee</span></div>
+      <div data-bind="css:{active:step()===3,done:step()>3}"><b>3</b><span>Upload KYC</span></div>
+      <div data-bind="css:{active:step()===4,done:context().eligible}"><b>4</b><span>Verification</span></div>
+    </div>
+
+    <section class="form-card" data-bind="visible:step()===1"><p class="eyebrow">STEP 1 OF 4</p><h2>Tell us about yourself</h2><p class="form-help">These details create your policyholder profile.</p><div class="field-grid">
+      <label>First name<input class="sl-input" data-bind="value:firstName"></label><label>Last name<input class="sl-input" data-bind="value:lastName"></label>
+      <label>Date of birth<input class="sl-input" type="date" data-bind="value:dob"></label><label>Email address<input class="sl-input" type="email" data-bind="value:email"></label>
+      <label>Mobile number<input class="sl-input" data-bind="value:phone" placeholder="10-digit number"></label><label class="full">Residential address<textarea class="sl-input" rows="3" data-bind="value:address"></textarea></label>
+    </div><button class="sl-btn primary" data-bind="click:create,disable:busy">Save and continue</button></section>
+
+    <section class="form-card" data-bind="visible:step()===2"><p class="eyebrow">STEP 2 OF 4</p><h2>Add your nominee</h2><p class="form-help">Your nominee is the person who receives policy benefits when applicable.</p><div class="field-grid">
+      <label>Nominee’s full name<input class="sl-input" data-bind="value:nomineeName"></label><label>Relationship<select class="sl-input" data-bind="value:relationship"><option>SPOUSE</option><option>PARENT</option><option>CHILD</option><option>SIBLING</option><option>OTHER</option></select></label>
+      <label>Date of birth<input class="sl-input" type="date" data-bind="value:nomineeDob"></label><label>Contact number<input class="sl-input" data-bind="value:contactNo"></label>
+    </div><button class="sl-btn primary" data-bind="click:addNominee,disable:busy">Add nominee and continue</button></section>
+
+    <section class="form-card" data-bind="visible:step()===3"><p class="eyebrow">STEP 3 OF 4</p><h2>Submit your KYC details</h2><p class="form-help">Enter one government-issued document. A staff member will verify it before purchase is unlocked.</p><div class="field-grid">
+      <label>Document type<select class="sl-input" data-bind="value:documentType"><option>AADHAAR</option><option>PAN</option><option>PASSPORT</option><option>DRIVING_LICENCE</option></select></label><label>Document number<input class="sl-input" data-bind="value:documentNumber" placeholder="Enter document number"></label>
+    </div><div class="privacy-note">Your document number is sent securely to the policyholder service for verification.</div><button class="sl-btn primary" data-bind="click:addDocument,disable:busy">Submit KYC for verification</button></section>
+
+    <section class="status-card" data-bind="visible:step()===4">
+      <div class="status-symbol" data-bind="css:{verified:context().eligible}"><span data-bind="text:context().eligible?'✓':'…'"></span></div>
+      <p class="eyebrow" data-bind="text:context().eligible?'VERIFICATION COMPLETE':'KYC SUBMITTED'"></p><h2 data-bind="text:context().eligible?'You’re eligible to purchase':'We’re reviewing your KYC'"></h2>
+      <p data-bind="text:context().eligible?'Your product catalogue and purchase flow are now unlocked.':'You cannot purchase a policy yet. Refresh the status after an underwriter or administrator reviews your document.'"></p>
+      <button class="sl-btn secondary" data-bind="click:eligibility,disable:busy">Refresh eligibility</button> <a class="sl-btn primary" data-bind="visible:context().eligible" href="?ojr=products">Explore insurance plans</a>
+    </section>
+    <oj-bind-if test="[[message()]]"><div class="notice" data-bind="css:{error:error}"><oj-bind-text value="[[message]]"></oj-bind-text></div></oj-bind-if>
+  </oj-bind-if>
+
+  <oj-bind-if test="[[!isCustomer()]]">
+    <div class="page-heading"><div><p class="eyebrow">CUSTOMER DUE DILIGENCE</p><h1>KYC verification queue</h1><p>Review every pending document and make the decision directly from the case list.</p></div><span class="badge warning"><oj-bind-text value="[[pendingDocuments().length+' PENDING']]" ></oj-bind-text></span></div>
+    <div class="approval-list" data-bind="foreach:pendingDocuments"><article class="approval-card"><div class="approval-main"><span class="badge warning">AWAITING VERIFICATION</span><h2 data-bind="text:holderName||('Policyholder #'+policyholderId)"></h2><p data-bind="text:email||('Policyholder reference '+policyholderId)"></p></div><div class="approval-facts"><span><small>Document type</small><strong data-bind="text:documentType.replace('_',' ')"></strong></span><span><small>Document number</small><strong data-bind="text:documentNumber"></strong></span><span><small>Submitted</small><strong data-bind="text:uploadDate"></strong></span></div><div class="approval-actions"><button class="sl-btn primary" data-bind="click:function(){$parent.decideKyc($data,'VERIFIED')},disable:$parent.busy">Verify KYC</button><button class="sl-btn secondary" data-bind="click:function(){$parent.decideKyc($data,'REJECTED')},disable:$parent.busy">Reject</button></div></article></div>
+    <div class="empty-state" data-bind="visible:!busy()&&pendingDocuments().length===0"><h2>KYC queue is clear</h2><p>New customer KYC submissions will appear here automatically.</p></div>
+    <oj-bind-if test="[[message()]]"><div class="notice" data-bind="css:{error:error}"><oj-bind-text value="[[message]]"></oj-bind-text></div></oj-bind-if>
+  </oj-bind-if>
+</div>

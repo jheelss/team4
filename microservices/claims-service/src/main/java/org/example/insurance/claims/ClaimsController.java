@@ -36,6 +36,11 @@ public class ClaimsController {
         return claims.findByPolicyId(id);
     }
 
+    @GetMapping("/pending")
+    public List<Claim> pending() {
+        return claims.findByAssessmentStatusOrderByClaimDateAsc("PENDING");
+    }
+
     @PutMapping("/{id}/settlement")
     public Claim settle(@PathVariable Long id, @RequestParam String status,
             @RequestParam(required = false) java.math.BigDecimal amount) {
